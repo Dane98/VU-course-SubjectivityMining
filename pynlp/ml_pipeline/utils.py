@@ -42,22 +42,6 @@ def split(train_X, train_y, proportion_train, proportion_dev, shuffle=True):
 
 # ----------- grid search ----------------------
 
-#def report(results, n_top=3, logger):
-    #logger.info("\n1\t2\t3\n----\t----\t----")
-  #  for i in range(1, n_top + 1):
-    #    candidates = np.flatnonzero(results['rank_test_score'] == i)
-      #  for candidate in candidates:
-        #    tp1 = "Model with rank: {0}".format(i)
-          #  tp2 = "Mean validation score: {0:.3f} (std: {1:.3f})".format(
-            #      results['mean_test_score'][candidate],
-              #    results['std_test_score'][candidate])
-            #tp3 = "Parameters: {0}".format(results['params'][candidate])
-            #tp4 = ""
-            #logger.info(tp1)
-            #logger.info(tp2)
-            #logger.info(tp3)
-            #logger.info(tp4)
-
 def report(results, n_top=3):
     for i in range(1, n_top + 1):
         candidates = np.flatnonzero(results['rank_test_score'] == i)
@@ -80,20 +64,8 @@ def grid_search(pipeline, parameters, train_X, train_y, test_X):
 # ----------- evaluation --------------------------
 
 def eval(test_y, sys_y):
-    #cm= confusion_matrix(olid_test['labels'], hasoc_predictions)
-    #matrix = matrix / matrix.sum().sum()
-    #matrix_proportions = np.zeros((2,2))
-    #for i in range(0,2):
-      #  matrix_proportions[i,:] = matrix[i,:]/float(matrix[i,:].sum())
-    #names=['0','1']
-    #confusion_df = pd.DataFrame(matrix_proportions, index=names,columns=names)
-    #plt.figure(figsize=(5,5))
     cm= confusion_matrix(test_y, sys_y)
     cm= cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-    #sns.heatmap(confusion_df,annot=True,annot_kws={"size": 12},cmap='YlGnBu',cbar=False, square=True,fmt='.2f')
-    #plt.ylabel(r'True Value',fontsize=14)
-    #plt.xlabel(r'Predicted Value',fontsize=14)
-    #plt.tick_params(labelsize=12)
     sns.heatmap(cm,annot=True,annot_kws={"size": 30},cmap='YlGnBu',cbar=False, square=True,fmt='.2f')
     #plt.title("Confusion matrix: HASOC")
     plt.title("Confusion matrix: OLID")
